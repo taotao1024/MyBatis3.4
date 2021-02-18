@@ -16,6 +16,7 @@
 package org.apache.ibatis.logging;
 
 /**
+ * 适配器模式
  * Mybatis同一提供了trance、debug、warn、error四个级别的日志。
  *
  * @author Clinton Begin
