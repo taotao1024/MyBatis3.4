@@ -25,6 +25,8 @@ import org.apache.ibatis.logging.LogFactory;
  * 装饰着模式
  * <p>
  * 角色：具体装饰器
+ * <p>
+ * 提供了日志功能
  *
  * @author Clinton Begin
  */
@@ -32,7 +34,13 @@ public class LoggingCache implements Cache {
 
     private final Log log;
     private final Cache delegate;
+    /**
+     * 访问次数
+     */
     protected int requests = 0;
+    /**
+     * 命中次数
+     */
     protected int hits = 0;
 
     public LoggingCache(Cache delegate) {
@@ -55,6 +63,11 @@ public class LoggingCache implements Cache {
         delegate.putObject(key, object);
     }
 
+    /**
+     * 统计命中次数和访问次数，并按照指定的日志方式输出命中率
+     * @param key The key
+     * @return
+     */
     @Override
     public Object getObject(Object key) {
         requests++;

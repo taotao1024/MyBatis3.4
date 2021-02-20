@@ -33,6 +33,8 @@ import org.apache.ibatis.io.Resources;
  * 装饰着模式
  * <p>
  * 角色：具体装饰器
+ * <p>
+ * 提供了value对象序列化功能的装饰器
  *
  * @author Clinton Begin
  */
@@ -54,6 +56,12 @@ public class SerializedCache implements Cache {
         return delegate.getSize();
     }
 
+    /**
+     * 添加缓存项时，将value对应的java对象进行序列化，并将序列化后的byte[]数组作为value放入缓存
+     *
+     * @param key    Can be any object but usually it is a {@link CacheKey}
+     * @param object
+     */
     @Override
     public void putObject(Object key, Object object) {
         if (object == null || object instanceof Serializable) {
@@ -63,6 +71,12 @@ public class SerializedCache implements Cache {
         }
     }
 
+    /**
+     * 获取缓存项时，会将缓存项中的byte[]数组反序列化成Java对象
+     *
+     * @param key The key
+     * @return
+     */
     @Override
     public Object getObject(Object key) {
         Object object = delegate.getObject(key);

@@ -23,13 +23,21 @@ import org.apache.ibatis.cache.Cache;
  * 装饰着模式
  * <p>
  * 角色：具体装饰器
+ * <p>
+ * 周期性清理缓存的装饰器
  *
  * @author Clinton Begin
  */
 public class ScheduledCache implements Cache {
 
     private final Cache delegate;
+    /**
+     * 记录两次缓存清理之间的时间间隔、默认时一小时
+     */
     protected long clearInterval;
+    /**
+     * 最近一次清理的时间戳
+     */
     protected long lastClear;
 
     public ScheduledCache(Cache delegate) {
@@ -91,6 +99,11 @@ public class ScheduledCache implements Cache {
         return delegate.equals(obj);
     }
 
+    /**
+     * 根据时间间隔和最近一次清理的时间戳判断，是否需要清除操作
+     *
+     * @return
+     */
     private boolean clearWhenStale() {
         if (System.currentTimeMillis() - lastClear > clearInterval) {
             clear();

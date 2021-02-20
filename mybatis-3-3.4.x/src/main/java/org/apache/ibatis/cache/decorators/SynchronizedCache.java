@@ -23,6 +23,8 @@ import org.apache.ibatis.cache.Cache;
  * 装饰着模式
  * <p>
  * 角色：具体装饰器
+ * <p>
+ * 同步装饰器
  *
  * @author Clinton Begin
  */
