@@ -28,6 +28,8 @@ import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 
 /**
+ * 单例模式
+ * <p>
  * Provides a very simple API for accessing resources within an application server.
  * 为访问应用服务器内的资源提供了一个非常简单的API。
  * <p>
