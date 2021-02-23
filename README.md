@@ -66,7 +66,13 @@ org.apache.ibatis.cache.impl
 
 ## 核心处理层
 
-### 1.执行器  
+### 1.Mybatis初始化
+org.apache.ibatis.session
+
+构建者模式(生成器模式)
+SqlSessionFactoryBuilder.build() 入口
+
+### 99.执行器  
 org.apache.ibatis.executor
 org.apache.ibatis.executor.keygen
 org.apache.ibatis.executor.loader
