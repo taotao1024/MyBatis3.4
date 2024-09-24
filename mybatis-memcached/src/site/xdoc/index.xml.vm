@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2012-2022 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          https://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+  <properties>
+    <title>MyBatis Memcached | Reference Documentation</title>
+    <author email="mybatis-dev@googlegroups.com">The MyBatis Team</author>
+  </properties>
+
+  <body>
+    <section name="MyBatis Memcached integration - Reference Documentation">
+
+    <p><a href="http://memcached.org/">Memcached</a> is an in-memory key-value store for small chunks of arbitrary data
+    (strings, objects) from results of database calls, API calls, or page rendering..</p>
+    <p>The Memcached integration is built on top of the <code>spymemcached</code> client, written by Dustin Sallings.</p>
+    <p>Users that want to use Memcached into their applications, have to download the
+    <a href="http://code.google.com/p/mybatis/downloads/list?q=Product-Cache">zip bundle</a>, decompress it and add the jars in the classpath;
+    Apache Maven users instead can simply add in
+    the <code>pom.xml</code> the following dependency:</p>
+    <source><![CDATA[<dependencies>
+  ...
+  <dependency>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>${project.artifactId}</artifactId>
+    <version>${project.version}</version>
+  </dependency>
+  ...
+</dependencies>]]></source>
+            <p>then, just configure it in the mapper XML</p>
+            <source><![CDATA[<mapper namespace="org.acme.FooMapper">
+  <cache type="org.mybatis.caches.memcached.MemcachedCache" />
+  ...
+</mapper>]]></source>
+
+  <p>The Memcached cache is configurable by putting the
+  <code>/memcached.properties</code> classpath resource; if not found, the client will
+  use the default setting.</p>
+  <p>The following table resumes the supported configurations params; each
+  parameter is optional, if not found in the configuration, the client will use
+  the default value:</p>
+
+  <table>
+    <tr>
+      <th>Property</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>org.mybatis.caches.memcached.keyprefix</td>
+      <td><code>_mybatis_</code></td>
+      <td>any string identifier</td>
+    </tr>
+    <tr>
+      <td>org.mybatis.caches.memcached.servers</td>
+      <td><code>localhost:11211</code></td>
+      <td>space separated list of <code>${host}:${port}</code></td>
+    </tr>
+    <tr>
+      <td>org.mybatis.caches.memcached.connectionfactory</td>
+      <td><code>net.spy.memcached.DefaultConnectionFactory</code></td>
+      <td>Any class that implements <code>net.spy.memcached.ConnectionFactory</code></td>
+    </tr>
+    <tr>
+      <td>org.mybatis.caches.memcached.expiration</td>
+      <td>the number of seconds in 30 days</td>
+      <td>the expiration time (in seconds)</td>
+    </tr>
+    <tr>
+      <td>org.mybatis.caches.memcached.asyncget</td>
+      <td><code>false</code></td>
+      <td>flag to enable/disable the async get</td>
+    </tr>
+    <tr>
+      <td>org.mybatis.caches.memcached.timeout</td>
+      <td><code>5</code></td>
+      <td>the timeout when using async get</td>
+    </tr>
+    <tr>
+      <td>org.mybatis.caches.memcached.timeoutunit</td>
+      <td><code>java.util.concurrent.TimeUnit.SECONDS</code></td>
+      <td>the timeout unit when using async get</td>
+    </tr>
+    <tr>
+      <td>org.mybatis.caches.memcached.compression</td>
+      <td><code>false</code></td>
+      <td>if true, objects will be GZIP compressed before putting them to Memcached</td>
+    </tr>
+  </table>
+
+    <p>If users need to log cache operations, they can plug the Cache logging version:</p>
+    <source><![CDATA[<mapper namespace="org.acme.FooMapper">
+  <cache type="org.mybatis.caches.memcached.LoggingMemcachedCache" />
+  ...
+</mapper>]]></source>
+        </section>
+    </body>
+
+</document>
