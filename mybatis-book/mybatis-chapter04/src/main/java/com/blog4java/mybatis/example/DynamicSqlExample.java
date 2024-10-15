@@ -18,7 +18,6 @@ import java.util.List;
 public class DynamicSqlExample {
 
 
-
     @Before
     public void initData() {
         DbUtils.initData();
@@ -36,9 +35,28 @@ public class DynamicSqlExample {
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         UserEntity04 entity = new UserEntity04();
         entity.setPhone("18700001111");
-        List<UserEntity04> userList =  userMapper.getUserByEntity(entity);
+        List<UserEntity04> userList = userMapper.getUserByEntity(entity);
         System.out.println(JSON.toJSONString(userList));
 
+    }
+
+    @Test
+    public void testDynamicSql02() throws IOException {
+        // 获取配置文件输入流
+        InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+        // 通过SqlSessionFactoryBuilder的build()方法创建SqlSessionFactory实例
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        // 调用openSession()方法创建SqlSession实例
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        if (!sqlSession.getConfiguration().hasMapper(UserMapper.class)) {
+            sqlSession.getConfiguration().addMapper(UserMapper.class);
+        }
+        // 获取UserMapper代理对象
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        UserEntity04 entity = new UserEntity04();
+        entity.setPhone("18700001111");
+        List<UserEntity04> userList = userMapper.getUserByEntity(entity);
+        System.out.println(JSON.toJSONString(userList));
     }
 
 }
